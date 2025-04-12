@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineSkins Shop</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .skin {
+            display: inline-block;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: white;
+        }
+
+        .skin img {
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px 0;
+            background-color: #333;
+            color: white;
+        }
+
+        #loginButton {
+            font-size: 16px;
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #loginButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to MineSkins</h1>
+        <p>Your one-stop shop for Minecraft skins!</p>
+    </header>
+    <main>
+        <section id="skins">
+            <h2>Available Skins</h2>
+            <div class="skin">
+                <img src="https://example.com/skin1.png" alt="Skin 1">
+                <p>Skin 1 - $1.00</p>
+            </div>
+            <div class="skin">
+                <img src="https://example.com/skin2.png" alt="Skin 2">
+                <p>Skin 2 - $1.50</p>
+            </div>
+        </section>
+        <section id="subscription">
+            <h2>Become a Premium Member</h2>
+            <p>Unlock unlimited AI skin generation for $10/month or $103/year (14% off).</p>
+        </section>
+        <button id="loginButton">Login</button>
+        <div id="adminPanel"></div>
+    </main>
+    <footer>
+        <p>&copy; 2025 MineSkins</p>
+    </footer>
+    <script>
+        /* JavaScript Code */
+        const adminAccount = {
+            username: "MineSkins",
+            password: "Av6nivr123"
+        };
+
+        let loggedInUser = null;
+
+        function login(username, password) {
+            if (username === adminAccount.username && password === adminAccount.password) {
+                loggedInUser = {
+                    role: "admin",
+                    username: username
+                };
+                alert("Logged in as Admin!");
+                showAdminPanel();
+            } else {
+                alert("Invalid username or password.");
+            }
+        }
+
+        function showAdminPanel() {
+            if (loggedInUser && loggedInUser.role === "admin") {
+                const adminPanel = document.getElementById("adminPanel");
+                adminPanel.innerHTML = `
+                    <h2>Admin Panel</h2>
+                    <p>Approve or reject uploaded skins here.</p>
+                `;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const loginButton = document.getElementById("loginButton");
+            if (loginButton) {
+                loginButton.addEventListener("click", () => {
+                    const username = prompt("Enter username:");
+                    const password = prompt("Enter password:");
+                    login(username, password);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
