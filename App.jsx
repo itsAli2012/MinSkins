@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { Analytics } from "@vercel/analytics/react";
+import "./styles.css"; // Ensure you have styles.css for basic styling
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,18 +13,24 @@ const App = () => {
     const endpoint = isLogin ? "http://localhost:5000/login" : "http://localhost:5000/register";
 
     try {
-      const response = await axios.post(endpoint, { username, password });
-      setMessage(response.data.message);
-      if (isLogin && response.data.token) {
-        localStorage.setItem("token", response.data.token);
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      setMessage(data.message);
+      if (isLogin && data.token) {
+        localStorage.setItem("token", data.token);
       }
     } catch (error) {
-      setMessage(error.response?.data?.message || "An error occurred");
+      setMessage("An error occurred. Please try again.");
     }
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <div className="app">
       <h1>{isLogin ? "Login" : "Register"} to MineSkins</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -50,6 +57,8 @@ const App = () => {
       <button onClick={() => setIsLogin(!isLogin)}>
         Switch to {isLogin ? "Register" : "Login"}
       </button>
+      {/* Vercel Analytics */}
+      <Analytics />
     </div>
   );
 };
